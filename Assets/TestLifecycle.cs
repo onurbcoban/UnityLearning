@@ -15,14 +15,14 @@ public class TestLifecycle : MonoBehaviour
         list = new List<int>();
         string a = "hedef";
         a = a + "x";
-        Instantiate(gameObject);
+        //Instantiate(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
        //list = new List<int>();
-        Destroy(gameObject);
+        //Destroy(gameObject);
         
     }
 

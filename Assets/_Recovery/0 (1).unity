@@ -439,9 +439,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1414519351}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb165eb2f2ee9c040b12d71b75b16332, type: 3}
+  m_Script: {fileID: 11500000, guid: 0714345c6cebaf14eb1a964c67fb1855, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MusicManager
+  m_EditorClassIdentifier: Assembly-CSharp::DontDestroy
 --- !u!1 &1588445035
 GameObject:
   m_ObjectHideFlags: 0
