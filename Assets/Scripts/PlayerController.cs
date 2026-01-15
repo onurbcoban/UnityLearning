@@ -15,19 +15,21 @@ public class PlayerController : MonoBehaviour
     private float _velocity;
 
     [SerializeField] private float _speed;
-    [SerializeField] private float _smoothTime = 0.1f;
+    [SerializeField] private float rotationSpeed = 500f;
     private float _currentVelocity;
     [SerializeField] private float _jumpPower;
     private int _numberOfJumps;
-    [SerializeField] private int _maxNumberOfjumps = 2;  
+    [SerializeField] private int _maxNumberOfjumps = 2;
+    private Camera _mainCamera;
     void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _mainCamera = Camera.main;
     }
     void Update()
     {
-        ApplyGravity();
         ApplyRotation();
+        ApplyGravity();
         ApplyMovement();
         
     }
@@ -48,9 +50,9 @@ public class PlayerController : MonoBehaviour
     {
         if(_input.sqrMagnitude == 0) return;
         
-        var targetAngle = Mathf.Atan2(_direction.x,_direction.z) * Mathf.Rad2Deg;
-        var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, _smoothTime);
-        transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f); 
+        _direction = Quaternion.Euler(0.0f, _mainCamera.transform.eulerAngles.y, 0.0f) * new Vector3(_input.x, 0.0f, _input.y);
+        var targetRotation = Quaternion.LookRotation(_direction, Vector3.up);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     public void ApplyMovement()
@@ -79,7 +81,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator WaitForLanding()
     {
         yield return new WaitUntil(() => !IsGrounded());
-        yield return new WaitUntil(IsGrounded);
+        yield return new WaitUntil(IsGrounded); 
 
         _numberOfJumps = 0;
     }
